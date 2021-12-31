@@ -1,6 +1,33 @@
-import React from 'react';
+import React, {useState} from 'react';
 
-const Cart = ({cartItems, removeFromCart}) => {
+const Cart = ({cartItems, removeFromCart, createOrder}) => {
+
+    const [values, setValues] = useState({
+        name: "",
+        email: "",
+        address: "",
+        showCheckout: false
+    });
+
+    const {name, email, address, showCheckout} = values;
+
+    const handleOrder = (e) => {
+        e.preventDefault();
+
+        const order = {
+            name,
+            email,
+            address,
+            cartItems
+        }
+
+        createOrder(order);
+
+    };
+
+    const handleInput = name => e => {
+        setValues({...values, [name]: e.target.value});
+    };
 
     return (
         <div>
@@ -29,16 +56,57 @@ const Cart = ({cartItems, removeFromCart}) => {
                     </ul>
                 </div>
                 {cartItems.length !== 0 && (
-                    <div className="cart">
-                        <div className="total">
-                            <div>
-                                Total: {" "}
-                                €{cartItems.reduce((a, c) => a + c.price * c.count, 0).toFixed(1)}
+                    <div>
+                        <div className="cart">
+                            <div className="total">
+                                <div>
+                                    Total: {" "}
+                                    €{cartItems.reduce((a, c) => a + c.price * c.count, 0).toFixed(1)}
+                                </div>
+                                <button onClick={() => setValues({...values, showCheckout: true})} className="button primary">
+                                    Proceed
+                                </button>
                             </div>
-                            <button className="button primary">
-                                Proceed
-                            </button>
                         </div>
+
+                        {showCheckout && (
+                            <div className="cart">
+                                <form onSubmit={handleOrder}>
+                                    <ul className="form-container">
+                                        <li>
+                                            <label>Email</label>
+                                            <input
+                                                name="email"
+                                                type="email"
+                                                required
+                                                onChange={handleInput('email')}
+                                            />
+                                        </li>
+                                        <li>
+                                            <label>Name</label>
+                                            <input
+                                                name="name"
+                                                type="text"
+                                                required
+                                                onChange={handleInput('name')}
+                                            />
+                                        </li>
+                                        <li>
+                                            <label>Address</label>
+                                            <input
+                                                name="address"
+                                                type="text"
+                                                required
+                                                onChange={handleInput('address')}
+                                            />
+                                        </li>
+                                        <li>
+                                            <button type="submit" className="button primary">Checkout</button>
+                                        </li>
+                                    </ul>
+                                </form>
+                            </div>
+                        )}
                     </div>
                 )}
             </div>

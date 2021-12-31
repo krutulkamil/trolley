@@ -32,6 +32,10 @@ const App = () => {
         localStorage.setItem("cartItems", JSON.stringify(itemsInCart.filter(x => x._id !== product._id)));
     };
 
+    const createOrder = (order) => {
+        alert("Need to save order for " + order.name);
+    };
+
     const sortProducts = e => {
         let currentSort = e.target.value;
         setSort(currentSort);
@@ -73,6 +77,7 @@ const App = () => {
                         <Cart
                             cartItems={cartItems}
                             removeFromCart={removeFromCart}
+                            createOrder={createOrder}
                         />
                     </div>
                 </div>
@@ -83,6 +88,5 @@ const App = () => {
         </div>
     );
 }
-
 
 export default App;
