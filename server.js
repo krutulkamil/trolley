@@ -20,7 +20,7 @@ const Product = mongoose.model('products', new mongoose.Schema({
     description: String,
     availableSizes: [String],
     price: Number,
-}))
+}));
 
 app.get('/api/products', async (req, res) => {
     const products = await Product.find({});
@@ -41,4 +41,4 @@ app.delete('/api/products/:id', async (req, res) => {
 const port = process.env.PORT || 8000;
 app.listen(port, () => {
     console.log(`Server is listening at http://localhost:${port}`);
-})
+});

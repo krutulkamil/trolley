@@ -3,12 +3,14 @@ import data from './data.json';
 import Products from "./components/Products";
 import Filter from "./components/Filter";
 import Cart from "./components/Cart";
+import store from "./store"
+import {Provider} from "react-redux";
 
 const App = () => {
     const [products, setProducts] = useState(data.products);
     const [size, setSize] = useState('');
     const [sort, setSort] = useState('');
-    const [cartItems, setCartItems] = useState( localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : []);
+    const [cartItems, setCartItems] = useState(localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : []);
 
     const addToCart = (product) => {
         const itemsInCart = cartItems.slice();
@@ -54,38 +56,40 @@ const App = () => {
     };
 
     return (
-        <div className="grid-container">
-            <header>
-                <a href="/">TROLLEY</a>
-            </header>
-            <main>
-                <div className="content">
-                    <div className="main">
-                        <Filter
-                            count={products.length}
-                            size={size}
-                            sort={sort}
-                            filterProducts={filterProducts}
-                            sortProducts={sortProducts}
-                        />
-                        <Products
-                            products={products}
-                            addToCart={addToCart}
-                        />
+        <Provider store={store}>
+            <div className="grid-container">
+                <header>
+                    <a href="/">TROLLEY</a>
+                </header>
+                <main>
+                    <div className="content">
+                        <div className="main">
+                            <Filter
+                                count={products.length}
+                                size={size}
+                                sort={sort}
+                                filterProducts={filterProducts}
+                                sortProducts={sortProducts}
+                            />
+                            <Products
+                                products={products}
+                                addToCart={addToCart}
+                            />
+                        </div>
+                        <div className="sidebar">
+                            <Cart
+                                cartItems={cartItems}
+                                removeFromCart={removeFromCart}
+                                createOrder={createOrder}
+                            />
+                        </div>
                     </div>
-                    <div className="sidebar">
-                        <Cart
-                            cartItems={cartItems}
-                            removeFromCart={removeFromCart}
-                            createOrder={createOrder}
-                        />
-                    </div>
-                </div>
-            </main>
-            <footer>
-                All right is reserved.
-            </footer>
-        </div>
+                </main>
+                <footer>
+                    All right is reserved.
+                </footer>
+            </div>
+        </Provider>
     );
 }
 

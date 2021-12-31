@@ -1,9 +1,20 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import {useSelector, useDispatch} from "react-redux";
+import {fetchProducts} from "../actions/productActions";
+
 import Fade from 'react-reveal/Fade';
 import Zoom from 'react-reveal/Zoom';
 import Modal from 'react-modal';
 
-const Products = ({products, addToCart}) => {
+const Products = ({addToCart}) => {
+    const dispatch = useDispatch();
+
+    const products = useSelector((state) => state.products.items);
+
+    useEffect(() => {
+        dispatch(fetchProducts());
+    }, [dispatch])
+
     const [clickedProduct, setClickedProduct] = useState({
         product: null
     });
@@ -21,23 +32,28 @@ const Products = ({products, addToCart}) => {
     return (
         <div>
             <Fade bottom cascade>
-                <ul className="products">
-                    {products.map(product => (
-                        <li key={product._id}>
-                            <div className="product">
-                                <a href={`/#${product._id}`} onClick={() => openModal(product)}>
-                                    <img src={product.image} alt={product.title}/>
-                                    <p>{product.title}</p>
-                                </a>
-                                <div className="product-price">
-                                    <div>€{product.price}</div>
-                                    <button onClick={() => addToCart(product)} className="button primary">Add To Cart
-                                    </button>
+                {!products ? (
+                    <div>Loading...</div>
+                    ) : (
+                        <ul className="products">
+                        {products.map(product => (
+                            <li key={product._id}>
+                                <div className="product">
+                                    <a href={`/#${product._id}`} onClick={() => openModal(product)}>
+                                        <img src={product.image} alt={product.title}/>
+                                        <p>{product.title}</p>
+                                    </a>
+                                    <div className="product-price">
+                                        <div>€{product.price}</div>
+                                        <button onClick={() => addToCart(product)} className="button primary">Add To Cart
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
+                            </li>
+                        ))}
+                    </ul>
+                    )
+                }
             </Fade>
             {product && (
                 <Modal
