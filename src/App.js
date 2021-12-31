@@ -8,7 +8,7 @@ const App = () => {
     const [products, setProducts] = useState(data.products);
     const [size, setSize] = useState('');
     const [sort, setSort] = useState('');
-    const [cartItems, setCartItems] = useState([]);
+    const [cartItems, setCartItems] = useState( localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : []);
 
     const addToCart = (product) => {
         const itemsInCart = cartItems.slice();
@@ -22,12 +22,14 @@ const App = () => {
         if (!alreadyInCart) {
             itemsInCart.push({...product, count: 1});
         }
-        setCartItems(itemsInCart)
+        setCartItems(itemsInCart);
+        localStorage.setItem("cartItems", JSON.stringify(itemsInCart));
     };
 
     const removeFromCart = (product) => {
         const itemsInCart = cartItems.slice();
-        setCartItems(itemsInCart.filter(x => x._id !== product._id))
+        setCartItems(itemsInCart.filter(x => x._id !== product._id));
+        localStorage.setItem("cartItems", JSON.stringify(itemsInCart.filter(x => x._id !== product._id)));
     };
 
     const sortProducts = e => {
