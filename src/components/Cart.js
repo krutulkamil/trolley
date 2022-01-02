@@ -55,6 +55,7 @@ const Cart = () => {
                     <Modal
                         isOpen={true}
                         onRequestClose={closeModal}
+                        appElement={document.getElementById('root')}
                     >
                         <Zoom>
                             <button className="close-modal" onClick={closeModal}>x</button>
