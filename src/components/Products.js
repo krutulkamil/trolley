@@ -9,7 +9,7 @@ import Modal from 'react-modal';
 const Products = ({addToCart}) => {
     const dispatch = useDispatch();
 
-    const products = useSelector((state) => state.products.items);
+    const products = useSelector((state) => state.products.filteredItems);
 
     useEffect(() => {
         dispatch(fetchProducts());
