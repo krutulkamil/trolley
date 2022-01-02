@@ -1,23 +1,23 @@
 import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from "react-redux";
 import {fetchProducts} from "../actions/productActions";
+import {addToCart} from "../actions/cartActions";
 
 import Fade from 'react-reveal/Fade';
 import Zoom from 'react-reveal/Zoom';
 import Modal from 'react-modal';
 
-const Products = ({addToCart}) => {
+const Products = () => {
     const dispatch = useDispatch();
-
     const products = useSelector((state) => state.products.filteredItems);
-
-    useEffect(() => {
-        dispatch(fetchProducts());
-    }, [dispatch])
 
     const [clickedProduct, setClickedProduct] = useState({
         product: null
     });
+
+    useEffect(() => {
+        dispatch(fetchProducts());
+    }, [dispatch])
 
     const openModal = (product) => {
         setClickedProduct({product: product});
@@ -45,7 +45,7 @@ const Products = ({addToCart}) => {
                                     </a>
                                     <div className="product-price">
                                         <div>€{product.price}</div>
-                                        <button onClick={() => addToCart(product)} className="button primary">Add To Cart
+                                        <button onClick={() => dispatch(addToCart(product))} className="button primary">Add To Cart
                                         </button>
                                     </div>
                                 </div>
@@ -82,7 +82,7 @@ const Products = ({addToCart}) => {
                                 <div className="product-price">
                                     <div>€{product.price}</div>
                                     <button className="button primary" onClick={() => {
-                                        addToCart(product);
+                                        dispatch(addToCart(product));
                                         closeModal()
                                     }}>Add To Cart
                                     </button>

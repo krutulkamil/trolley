@@ -1,20 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {useSelector, useDispatch} from "react-redux";
 import {sortProducts, filterProducts} from "../actions/productActions";
 
 const Filter = () => {
-
     const dispatch = useDispatch();
     const size = useSelector((state) => state.products.size);
     const sort = useSelector((state) => state.products.sort);
     const products = useSelector((state) => state.products.items);
     const filteredProducts = useSelector((state) => state.products.filteredItems);
-
-    const [sorted, setSorted] = useState([])
-
-    useEffect(() => {
-        console.log('ZMIANA STANU');
-    }, [size]);
 
     return !filteredProducts ? <div>Loading...</div> : (
         <div className="filter">
@@ -39,6 +32,6 @@ const Filter = () => {
                 </select>
             </div>
         </div>
-    )}
+    )};
 
 export default Filter;

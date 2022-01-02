@@ -1,7 +1,11 @@
 import React, {useState} from 'react';
 import Fade from 'react-reveal/Fade';
+import {useSelector, useDispatch} from "react-redux";
+import {removeFromCart} from "../actions/cartActions";
 
-const Cart = ({cartItems, removeFromCart, createOrder}) => {
+const Cart = () => {
+    const dispatch = useDispatch();
+    const cartItems = useSelector((state) => state.cart.cartItems);
 
     const [values, setValues] = useState({
         name: "",
@@ -21,9 +25,7 @@ const Cart = ({cartItems, removeFromCart, createOrder}) => {
             address,
             cartItems
         }
-
-        createOrder(order);
-
+        // createOrder(order);
     };
 
     const handleInput = name => e => {
@@ -50,7 +52,7 @@ const Cart = ({cartItems, removeFromCart, createOrder}) => {
                                         <div>{item.title}</div>
                                         <div className="right">
                                             €{item.price} x {item.count} {" "}
-                                            <button className="button" onClick={() => removeFromCart(item)}>Remove
+                                            <button className="button" onClick={() => dispatch(removeFromCart(item))}>Remove
                                             </button>
                                         </div>
                                     </div>
