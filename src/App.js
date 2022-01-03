@@ -12,6 +12,7 @@ const App = () => {
                 <div className="grid-container">
                     <header>
                         <Link to="/">TROLLEY</Link>
+                        <Link to="/admin">Admin</Link>
                     </header>
                     <main>
                         <Routes>
