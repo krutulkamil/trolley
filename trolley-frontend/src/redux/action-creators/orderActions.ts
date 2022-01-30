@@ -23,6 +23,7 @@ export const createOrder = (order: CreateOrder) => (dispatch: Dispatch<OrderActi
             dispatch({
                 type: ActionType.CLEAR_ORDER,
             });
+            window.location.reload();
         });
 };
 
