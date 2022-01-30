@@ -6,7 +6,7 @@ import {OrderAction} from "../actions";
 import {CreateOrder} from "../../utils/types";
 
 export const createOrder = (order: CreateOrder) => (dispatch: Dispatch<OrderAction>) => {
-    fetch("http://localhost:8000/api/orders", {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/api/orders`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -33,7 +33,7 @@ export const clearOrder = () => (dispatch: Dispatch<OrderAction>) => {
 };
 
 export const fetchOrders = () => (dispatch: Dispatch<OrderAction>) => {
-    fetch("http://localhost:8000/api/orders")
+    fetch(`${process.env.REACT_APP_SERVER_URL}/api/orders`)
         .then(res => res.json())
         .then(data => {
             dispatch({

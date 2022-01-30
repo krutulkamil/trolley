@@ -10,7 +10,7 @@ import Cart from "../components/Cart";
 import {Product} from "../utils/types";
 
 const fetchProducts = async (): Promise<Product[]> => {
-    return await (await fetch('http://localhost:8000/api/products')).json();
+    return await (await fetch(`${process.env.REACT_APP_SERVER_URL}/api/products`)).json();
 }
 
 const Home: FunctionComponent = (): JSX.Element => {
