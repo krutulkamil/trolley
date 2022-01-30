@@ -1,10 +1,13 @@
-import React, {useEffect} from 'react';
+// react
+import React, {FunctionComponent, useEffect} from 'react';
+// redux
 import {useSelector, useDispatch} from 'react-redux';
-import {fetchOrders} from "../actions/orderActions";
+import {fetchOrders} from "../redux/action-creators/orderActions";
+import {State} from "../redux/store";
 
-const Orders = () => {
+const Orders: FunctionComponent = (): JSX.Element => {
     const dispatch = useDispatch();
-    const orders = useSelector((state) => state.order.orders);
+    const orders = useSelector((state: State) => state.order.orders);
 
     useEffect(() => {
         dispatch(fetchOrders())

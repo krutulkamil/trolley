@@ -1,13 +1,13 @@
-import React from 'react';
-import store from "./store"
-import {Provider} from "react-redux";
+// react
+import React, {FunctionComponent} from 'react';
+// react-router-dom
 import {BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
-import AdminScreen from "./screens/AdminScreen";
-import HomeScreen from "./screens/HomeScreen";
+// pages
+import Admin from "./pages/Admin";
+import Home from "./pages/Home";
 
-const App = () => {
-    return (
-        <Provider store={store}>
+const App: FunctionComponent = (): JSX.Element => {
+        return (
             <Router>
                 <div className="grid-container">
                     <header>
@@ -16,8 +16,8 @@ const App = () => {
                     </header>
                     <main>
                         <Routes>
-                            <Route path="/admin" element={<AdminScreen />} />
-                            <Route exact path="/" element={<HomeScreen />} />
+                            <Route path="/admin" element={<Admin />} />
+                            <Route path="/" element={<Home />} />
                         </Routes>
                     </main>
                     <footer>
@@ -25,7 +25,6 @@ const App = () => {
                     </footer>
                 </div>
             </Router>
-        </Provider>
     );
 };
 

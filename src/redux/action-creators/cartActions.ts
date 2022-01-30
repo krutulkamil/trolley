@@ -1,6 +1,12 @@
-import {ADD_TO_CART, REMOVE_FROM_CART} from "../types";
+// redux
+import {ActionType} from "../action-types";
+import {Dispatch} from "redux";
+import {CartAction} from "../actions";
+import {State} from "../store";
+// types
+import {CartItem} from "../../utils/types";
 
-export const addToCart = (product) => (dispatch, getState) => {
+export const addToCart = (product: CartItem) => (dispatch: Dispatch<CartAction>, getState: () => State) => {
     const cartItems = getState().cart.cartItems.slice();
     let alreadyExists = false;
     cartItems.forEach((x) => {
@@ -13,18 +19,18 @@ export const addToCart = (product) => (dispatch, getState) => {
         cartItems.push({...product, count : 1});
     }
     dispatch({
-       type: ADD_TO_CART,
-       payload: { cartItems }
+       type: ActionType.ADD_TO_CART,
+       payload: cartItems
     });
 
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
 };
 
-export const removeFromCart = (product) => (dispatch, getState) => {
+export const removeFromCart = (product: CartItem) => (dispatch: Dispatch<CartAction>, getState: () => State) => {
     const cartItems = getState().cart.cartItems.slice().filter(x => x._id !== product._id);
     dispatch({
-        type: REMOVE_FROM_CART,
-        payload: { cartItems }
+        type: ActionType.REMOVE_FROM_CART,
+        payload: cartItems
     });
 
     localStorage.setItem('cartItems', JSON.stringify(cartItems));

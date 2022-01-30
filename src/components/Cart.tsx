@@ -1,17 +1,29 @@
-import React, {useState} from 'react';
-import Fade from 'react-reveal/Fade';
+// react
+import React, {ChangeEvent, FormEvent, FunctionComponent, useState} from 'react';
+// redux
 import {useSelector, useDispatch} from "react-redux";
-import {removeFromCart} from "../actions/cartActions";
-import {createOrder, clearOrder} from "../actions/orderActions";
-import Modal from 'react-modal';
+import {State} from "../redux/store";
+import {removeFromCart} from "../redux/action-creators/cartActions";
+import {createOrder, clearOrder} from "../redux/action-creators/orderActions";
+// animations
+import Fade from 'react-reveal/Fade';
 import Zoom from 'react-reveal/Zoom';
+// modal
+import Modal from 'react-modal';
 
-const Cart = () => {
+interface InitialState {
+    name: string;
+    email: string;
+    address: string;
+    showCheckout: boolean;
+}
+
+const Cart: FunctionComponent = (): JSX.Element => {
     const dispatch = useDispatch();
-    const cartItems = useSelector((state) => state.cart.cartItems);
-    const order = useSelector((state) => state.order.order)
+    const cartItems = useSelector((state: State) => state.cart.cartItems);
+    const order = useSelector((state: State) => state.order.order);
 
-    const [values, setValues] = useState({
+    const [values, setValues] = useState<InitialState>({
         name: "",
         email: "",
         address: "",
@@ -20,7 +32,7 @@ const Cart = () => {
 
     const {name, email, address, showCheckout} = values;
 
-    const handleOrder = (e) => {
+    const handleOrder = (e: FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
 
         const order = {
@@ -34,11 +46,11 @@ const Cart = () => {
         dispatch(createOrder(order));
     };
 
-    const handleInput = name => e => {
+    const handleInputChange = (name: string) => (e: ChangeEvent<HTMLInputElement>): void => {
         setValues({...values, [name]: e.target.value});
     };
 
-    const closeModal = () => {
+    const closeModal = (): void => {
         dispatch(clearOrder());
     };
 
@@ -144,7 +156,7 @@ const Cart = () => {
                                                     name="email"
                                                     type="email"
                                                     required
-                                                    onChange={handleInput('email')}
+                                                    onChange={handleInputChange('email')}
                                                 />
                                             </li>
                                             <li>
@@ -153,7 +165,7 @@ const Cart = () => {
                                                     name="name"
                                                     type="text"
                                                     required
-                                                    onChange={handleInput('name')}
+                                                    onChange={handleInputChange('name')}
                                                 />
                                             </li>
                                             <li>
@@ -162,7 +174,7 @@ const Cart = () => {
                                                     name="address"
                                                     type="text"
                                                     required
-                                                    onChange={handleInput('address')}
+                                                    onChange={handleInputChange('address')}
                                                 />
                                             </li>
                                             <li>

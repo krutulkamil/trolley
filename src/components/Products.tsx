@@ -1,29 +1,32 @@
-import React, {useState, useEffect} from 'react';
-import {useSelector, useDispatch} from "react-redux";
-import {fetchProducts} from "../actions/productActions";
-import {addToCart} from "../actions/cartActions";
-
+// react
+import React, {useState, FunctionComponent} from 'react';
+// redux
+import {useDispatch} from "react-redux";
+import {addToCart} from "../redux/action-creators/cartActions";
+// animations
 import Fade from 'react-reveal/Fade';
 import Zoom from 'react-reveal/Zoom';
+// modal
 import Modal from 'react-modal';
+// types
+import {Product} from "../utils/types";
 
-const Products = () => {
+interface Props {
+    products: Product[];
+}
+
+const Products: FunctionComponent<Props> = ({products}): JSX.Element => {
+
     const dispatch = useDispatch();
-    const products = useSelector((state) => state.products.filteredItems);
-
-    const [clickedProduct, setClickedProduct] = useState({
+    const [clickedProduct, setClickedProduct] = useState<{product: Product | null}>({
         product: null
     });
 
-    useEffect(() => {
-        dispatch(fetchProducts());
-    }, [dispatch])
-
-    const openModal = (product) => {
+    const openModal = (product: Product): void => {
         setClickedProduct({product: product});
     };
 
-    const closeModal = () => {
+    const closeModal = (): void => {
         setClickedProduct({product: null});
     };
 
