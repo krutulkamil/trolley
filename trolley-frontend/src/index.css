@@ -37,7 +37,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: .5rem;
+  padding: .5rem 3rem;
 }
 
 header a {
@@ -144,6 +144,13 @@ footer {
 
 .filter div {
   flex: 1;
+}
+
+@media screen and (max-width: 768px) {
+  .filter select {
+    margin-top: 5px;
+    display: block;
+  }
 }
 
 /* Index.css */
